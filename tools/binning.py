@@ -1,4 +1,3 @@
-import math
 import pandas as pd
 
 
@@ -104,12 +103,23 @@ def binning_sparse_col(df, target, col, max_bin=None, min_binpct=0, sparse_value
 
 
 def group_handle(group,target,total,bad,good):
+    """
+    一.IV值，特征对lable的IV值
+    < 0.02预测能力很弱、
+    0.02 to 0.1预测能力弱、
+    0.1 to 0.3预测能力中、
+    0.3 to 0.5预测能力强 、
+    >0.5 很强的预测能力
+    二.woe值：WOE表示的含义即是"当前分组中响应客户
+    占所有响应客户的比例"和"当前分组中没有响应的客
+    户占所有没有响应客户的比例"的差异。
+    """
     sample_amount = group.shape[0]
     sample_bad_amount = group[target].sum()
     sample_bad_percent = sample_bad_amount/bad
     sample_good_amount = sample_amount - sample_bad_amount
     sample_good_percent= sample_good_amount/good
-    woe = math.log(sample_bad_percent/sample_good_percent) if (sample_bad_percent and sample_good_percent) else None
+    woe = pd.np.log(sample_bad_percent/sample_good_percent) if (sample_bad_percent and sample_good_percent) else None
     return pd.Series({
         # 样本数
         "amount":sample_amount,
@@ -137,7 +147,7 @@ def split_data(df, col, split_num):
     """
     df2 = df.copy()
     count = df2.shape[0]  # 总样本数
-    n = math.floor(count / split_num)  # 按照分割点数目等分后每组的样本数
+    n = pd.np.floor(count / split_num)  # 按照分割点数目等分后每组的样本数
     split_index = [i * n for i in range(1, split_num)]  # 分割点的索引
     values = sorted(list(df2[col]))  # 对变量的值从小到大进行排序
     split_value = [values[i] for i in split_index]  # 分割点对应的value

@@ -147,7 +147,7 @@ def split_data(df, col, split_num):
     """
     df2 = df.copy()
     count = df2.shape[0]  # 总样本数
-    n = pd.np.floor(count / split_num)  # 按照分割点数目等分后每组的样本数
+    n = int(pd.np.floor(count / split_num))  # 按照分割点数目等分后每组的样本数
     split_index = [i * n for i in range(1, split_num)]  # 分割点的索引
     values = sorted(list(df2[col]))  # 对变量的值从小到大进行排序
     split_value = [values[i] for i in split_index]  # 分割点对应的value

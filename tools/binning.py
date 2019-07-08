@@ -99,7 +99,7 @@ def binning_sparse_col(df, target, col, max_bin=None, min_binpct=0, sparse_value
     # 返回统计结果
     group_result = pd.concat([group1_result.reset_index(), group2_result.reset_index()], axis=0).reset_index(drop=True)
     group_result["IV"] = group_result["iv"].sum()
-    return group1_result
+    return group_result
 
 
 def group_handle(group,target,total,bad,good):

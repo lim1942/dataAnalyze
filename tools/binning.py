@@ -17,6 +17,8 @@ def binning_cate(df, target, col):
     good = total - bad
     group_result = df.groupby(col).apply(group_handle,target,total,bad,good).reset_index()
     group_result["IV"] = group_result["iv"].sum()
+    group_result.rename(columns={col:'name'}, inplace = True)
+    group_result['name'] = col
     return group_result
 
 
@@ -38,6 +40,8 @@ def binning_aeq(df, target, col, max_bin=None, right_border=True):
     bucket = pd.cut(df[col], max_bin, right=right_border)
     group_result = df.groupby(bucket).apply(group_handle,target,total,bad,good).reset_index()
     group_result["IV"] = group_result["iv"].sum()
+    group_result.rename(columns={col:'name'}, inplace = True)
+    group_result['name'] = col
     return group_result
 
 
@@ -62,6 +66,8 @@ def binning_num(df, target, col, max_bin=None, min_binpct=0):
     bucket = pd.cut(df[col], cut)
     group_result = df.groupby(bucket).apply(group_handle,target,total,bad,good).reset_index()
     group_result["IV"] = group_result["iv"].sum()
+    group_result.rename(columns={col:'name'}, inplace = True)
+    group_result['name'] = col
     return group_result
 
 
@@ -99,6 +105,8 @@ def binning_sparse_col(df, target, col, max_bin=None, min_binpct=0, sparse_value
     # 返回统计结果
     group_result = pd.concat([group1_result.reset_index(), group2_result.reset_index()], axis=0).reset_index(drop=True)
     group_result["IV"] = group_result["iv"].sum()
+    group_result.rename(columns={col:'name'}, inplace = True)
+    group_result['name'] = col
     return group_result
 
 
@@ -121,6 +129,8 @@ def group_handle(group,target,total,bad,good):
     sample_good_percent= sample_good_amount/good
     woe = pd.np.log(sample_bad_percent/sample_good_percent) if (sample_bad_percent and sample_good_percent) else None
     return pd.Series({
+        # 分组名
+        "cate":group.name,
         # 样本数
         "amount":sample_amount,
         # 样本占比

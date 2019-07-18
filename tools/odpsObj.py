@@ -137,8 +137,8 @@ class myOdps:
 
 
 
+obj = myOdps(access_id=os.getenv("ALIAK"),secret_access_key=os.getenv("ALIAKPWD"),project="shanghai")
 if __name__ == "__main__":
-    obj = myOdps(access_id=os.getenv("ALIAK"),secret_access_key=os.getenv("ALIAKPWD"),project="shanghai")
 
     # sql = """SELECT count(*)
     # FROM

@@ -148,4 +148,4 @@ if __name__ == "__main__":
     # res = obj.select_sql(sql)
     # for i in res:
     #     print(i)
-    obj.uploadCSV("/Users/apple/Documents/project/analyze/strategy/new/strategy_judge_convert.csv","mycsvtest")
+    obj.uploadCSV("/Users/apple/Documents/project/analyze/shutdownAnalyze/all_csv","shutdown_analyze")

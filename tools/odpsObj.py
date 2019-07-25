@@ -1,9 +1,9 @@
 import sys
+import os
 import requests
 import pandas as pd
 
 from odps import ODPS
-from config import config
 from odps.models import Schema, Column, Partition
 
 
